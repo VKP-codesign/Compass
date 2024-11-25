@@ -1,24 +1,55 @@
-// Check if DeviceOrientationEvent is supported
-if (window.DeviceOrientationEvent) {
-  window.addEventListener('deviceorientation', (event) => {
-      const heading = event.alpha; // Use alpha for compass direction
-      const needle = document.querySelector('.needle');
-      const headingDisplay = document.getElementById('heading');
-      const directionDisplay = document.getElementById('direction');
+// Function to handle Device Orientation
+function handleOrientation(event) {
+    const alpha = event.alpha; // Get the heading in degrees
+    const needle = document.querySelector('.needle');
+    const headingDisplay = document.getElementById('heading');
+    const directionDisplay = document.getElementById('direction');
 
-      if (heading !== null) {
-          // Rotate the needle
-          needle.style.transform = `translate(-50%, -50%) rotate(${heading}deg)`;
+    if (alpha !== null) {
+        // Adjust heading for orientation (iOS fix)
+        const adjustedHeading = alpha - (window.orientation || 0);
 
-          // Update heading display
-          headingDisplay.textContent = `${Math.round(heading)}°`;
+        // Update the needle rotation
+        needle.style.transform = `translate(-50%, -50%) rotate(${adjustedHeading}deg)`;
 
-          // Convert heading to compass direction
-          const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
-          const index = Math.round(heading / 45) % 8;
-          directionDisplay.textContent = directions[index];
-      }
-  });
-} else {
-  alert('Your device does not support compass functionality.');
+        // Update heading display
+        headingDisplay.textContent = `${Math.round(adjustedHeading)}°`;
+
+        // Update compass direction
+        const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
+        const index = Math.round(adjustedHeading / 45) % 8;
+        directionDisplay.textContent = directions[index];
+    } else {
+        headingDisplay.textContent = 'Compass unavailable';
+    }
 }
+
+// Check for permission and compatibility
+function initializeCompass() {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // For iOS devices
+        const button = document.getElementById('grant-permission');
+        button.style.display = 'block';
+
+        button.addEventListener('click', () => {
+            DeviceOrientationEvent.requestPermission()
+                .then((response) => {
+                    if (response === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        button.style.display = 'none';
+                    } else {
+                        alert('Permission denied.');
+                    }
+                })
+                .catch(console.error);
+        });
+    } else if ('DeviceOrientationEvent' in window) {
+        // For non-iOS devices
+        window.addEventListener('deviceorientation', handleOrientation);
+    } else {
+        alert('Your device does not support compass functionality.');
+    }
+}
+
+// Initialize the application
+initializeCompass();
