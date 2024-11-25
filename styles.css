@@ -1,51 +1,70 @@
+/* Base Styling */
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #1a1a1a;
-  color: #f1f1f1;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #f1f1f1;
 }
 
 .container {
-  margin-top: 50px;
+    margin-top: 50px;
 }
 
+/* Compass Styling */
 .compass {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
-  border: 5px solid #f1f1f1;
-  border-radius: 50%;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    border: 5px solid #f1f1f1;
+    border-radius: 50%;
 }
 
 .needle {
-  position: absolute;
-  width: 5px;
-  height: 150px;
-  background: red;
-  top: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    width: 5px;
+    height: 150px;
+    background: red;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease-in-out;
 }
 
+/* Heading and Direction */
 #heading, #direction {
-  margin: 20px 0;
-  font-size: 24px;
+    margin: 20px 0;
+    font-size: 24px;
 }
 
+#grant-permission {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#grant-permission:hover {
+    background: #0056b3;
+}
+
+/* Responsive Styling */
 @media (max-width: 768px) {
-  .compass {
-      width: 200px;
-      height: 200px;
-  }
+    .compass {
+        width: 200px;
+        height: 200px;
+    }
 
-  .needle {
-      height: 100px;
-  }
+    .needle {
+        height: 100px;
+    }
 
-  #heading, #direction {
-      font-size: 20px;
-  }
+    #heading, #direction {
+        font-size: 20px;
+    }
 }
