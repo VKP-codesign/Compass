@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #1a1a1a;
+  color: #f1f1f1;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.compass {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  border: 5px solid #f1f1f1;
+  border-radius: 50%;
+}
+
+.needle {
+  position: absolute;
+  width: 5px;
+  height: 150px;
+  background: red;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translate(-50%, -50%);
+}
+
+#heading, #direction {
+  margin: 20px 0;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .compass {
+      width: 200px;
+      height: 200px;
+  }
+
+  .needle {
+      height: 100px;
+  }
+
+  #heading, #direction {
+      font-size: 20px;
+  }
+}
